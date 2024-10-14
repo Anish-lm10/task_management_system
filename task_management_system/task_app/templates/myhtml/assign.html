@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}
+  Assign Task
+{% endblock title %}
+{% load static %}
+{% block content %}
+<!-- Assign a task starts -->
+<div class="container mt-5">
+  <div class="container d-flex justify-content-center align-items-center mt-2">
+    <form method="POST" class="form_main" action="{% url 'assign' %}">
+        {% csrf_token %}
+        <p class="heading text-primary">Assign a Task</p>
+  
+        <div class="inputContainer">
+        <input placeholder="Task Title" name="title" id="title" class="inputField" type="text" required>
+        </div>
+  
+        <div class="inputContainer mb-0">
+          <div class="form-floating">
+            <textarea class=" inputField" name="description" placeholder="Task Description" id="floatingTextarea" style="width: 440px;" required></textarea>
+            <label for="floatingTextarea"></label>
+          </div>
+        </div>
+
+        <div class="inputContainer input-group mt-3">
+          <div class="caption input-group">Assign To: </div>
+          <input placeholder="Enter the username" name="user" id="user" class="inputField " type="text" required>
+          
+        </div>
+     
+  
+        <div class="inputContainer input-group">
+          <div class="caption input-group">Deadline </div>
+          <input name="edate" id="edate" class="inputField " type="date" required>
+          
+        </div>
+  
+  
+             
+            
+    <button type="submit" id="button">Assign</button>
+      
+    </form>
+  
+  </div>
+</div>
+<!-- Assign a task ends -->
+
+
+{% endblock content %}

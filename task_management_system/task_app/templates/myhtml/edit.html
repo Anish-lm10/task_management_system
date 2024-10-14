@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}
+  Create Task
+{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center mt-2">
+  <form method="POST" class="form_main" action="{% url 'edit' data.id %}">
+      {% csrf_token %}
+      <a href="{% url 'view' %}"><div class="fs-4 icons"><i class="fa-solid fa-arrow-left"></i></div></a>
+      <p class="heading text-primary">Edit a Task</p>
+
+      <div class="inputContainer">
+      <input placeholder="Task Title" value="{{data.title}}" name="title" id="title" class="inputField" type="text">
+      </div>
+
+      <div class="inputContainer mb-0">
+        <div class="form-floating">
+          <textarea class=" inputField" name="description" placeholder="Task Description" id="floatingTextarea" style="width: 440px; height: 150px;">{{data.description}}</textarea>
+          <label for="floatingTextarea"></label>
+        </div>
+      </div>
+      
+      <div class="inputContainer mb-5">
+       <!-- Select Dropdown -->
+        <select id="statusSelect" name="status" class="inputField" aria-label="Task Status">
+            <option value="Not Started" {% if data.status == "Not Started" %}selected{% endif %}>Not Started</option>
+            <option value="In Progress" {% if data.status == "In Progress" %}selected{% endif %}>In Progress</option>
+            <option value="Completed" {% if data.status == "Completed" %}selected{% endif %}>Completed</option>
+            <option value="On Hold" {% if data.status == "On Hold" %}selected{% endif %}>On Hold</option>
+        </select>
+      </div>
+
+      
+      <div class="inputContainer input-group mb-2">
+        <div class="caption input-group">Start date</div>
+        <input placeholder="Start Date" value="{{data.start_date|date:'Y-m-d'}}" name="sdate" id="sdate" class="inputField" type="date">
+        
+      </div>
+
+      <div class="inputContainer input-group">
+        <div class="caption input-group">End date</div>
+        <input placeholder="End Date" value="{{data.end_date|date:'Y-m-d'}}" name="edate" id="edate" class="inputField " type="date">
+        
+      </div>
+
+
+           
+          
+  <button type="submit" id="button">Update</button>
+    
+  </form>
+
+</div>
+{% endblock content %}

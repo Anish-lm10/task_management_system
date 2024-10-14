@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}
+  Create Task
+{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center mt-2">
+  <form method="POST" class="form_main" action="{% url 'create' %}">
+      {% csrf_token %}
+      <p class="heading text-primary">Create a Task</p>
+
+      <div class="inputContainer">
+      <input placeholder="Task Title" name="title" id="title" class="inputField" type="text" required>
+      </div>
+
+      <div class="inputContainer mb-0">
+        <div class="form-floating">
+          <textarea class=" inputField" name="description" placeholder="Task Description" id="floatingTextarea" style="width: 440px;" required></textarea>
+          <label for="floatingTextarea"></label>
+        </div>
+      </div>
+      
+      <div class="inputContainer mb-5">
+       <!-- Select Dropdown -->
+        <select id="statusSelect" name="status" class="inputField" aria-label="Task Status" required>
+          <option value="" selected>Select Status</option>
+          <option value="Not Started">Not Started</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Completed">Completed</option>
+          <option value="On Hold">On Hold</option>
+        </select>
+      </div>
+
+      
+      <div class="inputContainer input-group mb-2">
+        <div class="caption input-group">Start date</div>
+        <input placeholder="Start Date" name="sdate" id="sdate" class="inputField" type="date" required>
+        
+      </div>
+
+      <div class="inputContainer input-group">
+        <div class="caption input-group">End date</div>
+        <input placeholder="End Date" name="edate" id="edate" class="inputField " type="date" required>
+        
+      </div>
+
+
+           
+          
+  <button type="submit" id="button">Create</button>
+    
+  </form>
+
+</div>
+{% endblock content %}

@@ -1,0 +1,99 @@
+{% extends "base.html" %}
+{% block title %}
+  View Task
+{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container d-flex align-items-center mt-3">
+  <h1>Viewing tasks</h1>
+  <div class="ms-auto">
+    <a href="{% url 'create' %}"><div class=" btn btn-outline-primary circle" data-bs-toggle="tooltip" data-bs-title="Create new task" data-bs-placement="top"><i class="fa-solid fa-plus"></i> </div></a>
+  </div>
+  </div>
+
+  <div class="container mt-4">
+    <h3 class="text-center display-6 mb-4">My Current Tasks</h3>
+    <div class="row justify-content-center gy-3 m-1">
+      {% for d in data %}
+      <div class="col-12  rounded-3 shadow-sm boxess p-2">
+        <p class="fw-bold text-primary fs-3">Task Title: {{d.title}}</p>
+        <p class="lead">Task Description: {{d.description}}</p>
+        <p class="btn {% if d.status == 'Completed' %}
+           btn-outline-success
+        {% elif d.status == 'On Hold' %}
+           btn-outline-warning
+          {% elif d.status == 'In Progress' %}
+           btn-outline-info
+        {% else %}
+          btn-outline-primary
+        {% endif %} fw-bolder">Status: {{d.status}}</p>
+        <p class="text-muted">Start Date: {{d.start_date}}</p>
+        <p class="text-muted">End Date: {{d.end_date}}</p>
+
+        <div class="btns d-flex justify-content-end gap-3">
+          <!-- modal for complete btn starts  -->
+
+          <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-success circle" data-bs-toggle="modal" data-bs-target="#modal-{{d.id}}"  data-bs-title="Mark as Complete" data-bs-placement="top">
+              <i class="fa-solid fa-check"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal-{{d.id}}" tabindex="-1" aria-labelledby="modalLabel-{{d.id}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLabel-{{d.id}}">Mark as Complete</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure u want to mark the task as completed?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <a href="{% url 'completed' d.id %}"><button type="button" class="btn btn-outline-primary">Mark as completed</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- modal for complete btn ends  -->
+
+
+          <a href="{% url 'edit' d.id %}"><button class="btn btn-outline-primary circle" data-bs-toggle="tooltip" data-bs-title="Edit" data-bs-placement="top"><i class="fa-solid fa-pen-to-square"></i></button></a>
+
+
+          <!-- modal for DELETE starts -->
+
+          <button type="button" class="btn btn-outline-danger circle" data-bs-toggle="modal" data-bs-target="#modals-{{d.id}}"  data-bs-title="Mark as Complete" data-bs-placement="top">
+            <i class="fa-solid fa-trash"></i>
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="modals-{{d.id}}" tabindex="-1" aria-labelledby="modalLabels-{{d.id}}" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="modalLabels-{{d.id}}">Delete Data</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Are you sure u want to delete the task?
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                  <a href="{% url 'deleted' d.id %}"><button type="button" class="btn btn-outline-danger">Delete</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- modal for DELETE ends  -->
+           
+        </div>
+      </div>
+      
+    
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
+

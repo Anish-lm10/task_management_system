@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% block title %}
+  Home
+{% endblock title %}
+{% load static %}
+{% block content %}
+
+<!-- dashboard and Profile starts  -->
+<div class="container mt-4 d-flex align-items-center">  
+  <h1>Dashboard</h1>
+
+  <div class="btn-group ms-auto">
+    <button class="btn btn-sm border-0" type="button" data-bs-toggle="dropdown" >
+      <div class=" btn btn-outline-primary circle " data-bs-toggle="tooltip" data-bs-title="Profile" data-bs-placement="bottom"><i class="fa-solid fa-user"></i></div>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-dark">
+      <li><a class="dropdown-item" href="#"><i class="fa-solid fa-user"> </i> {{username}}</a></li>
+      <li><a class="dropdown-item" href="{% url 'log_out' %}"><i class="fa-solid fa-right-from-bracket"></i> Logout</a></li>
+    </ul>
+  </div>
+  <a href="{% url 'create' %}"><div class=" btn btn-outline-primary circle" data-bs-toggle="tooltip" data-bs-title="Create new task"><i class="fa-solid fa-plus"></i> </div></a>
+</div>
+<!-- dashboard and Profile ends  -->
+
+
+<!-- Summary report starts  -->
+<div class="container mt-3 ">
+  <h3 class="text-center">Monthly Report</h3>
+  <div class="row d-flex justify-content-center text-center text-white gap-3">
+    <div class="col-lg-4 rounded-4 boxes">
+      <div class="fw-bolder fs-1  number mt-5 mb-2">{{count}}</div>
+      <div class="fs-2 texts"><img src="{% static 'images/current.png' %}" alt="completed_img" style="height: 40px; width: 40px;">  Current Tasks</div>
+    </div>
+    <div class="col-lg-4 rounded-4 boxes">
+      <div class="number fw-bolder fs-1 mt-5 mb-2">
+       {{assigned_count}}</div>
+      <div class="fs-2  texts"> <img src="{% static 'images/assign.png' %}" alt="completed_img" style="height: 40px; width: 40px;">  Assigned Tasks</div>
+    </div>
+    <div class="col-lg-4 rounded-4 boxes">
+      <div class="fw-bolder fs-1 number mt-5 mb-2">
+        {{completed_no}}</div>
+      <div class="fs-2 texts"><img src="{% static 'images/completed.png' %}" alt="completed_img" style="height: 40px; width: 40px;"> Completed Tasks</div>
+    </div>
+  </div>
+</div>
+<!-- Summary reports ends  -->
+
+
+<!-- Overview section starts -->
+<div class="container mt-5">
+  <h3 class="text-center">Overview</h3>
+
+  <!-- filtering section starts -->
+  <form method="POST" action="{% url 'home' %}" class="form-floating">
+    {% csrf_token %}
+  <div class="row mb-3 mt-4">
+
+    <div class="col-md-6">
+      <label for="search" class="form-label text-primary fw-bold">Search</label>
+      <div class="input-group">
+        <input type="text" class="form-control" name="searched" id="search" placeholder="Search a task title or by status...">
+        <button class="btn btn-outline-primary" type="submit">
+          <i class="fa-solid fa-search"></i> Search
+        </button>
+      </div>    
+      <!-- only see show all btn when there is value entered in search bar -->
+      {% if request.POST.searched %} 
+      <a href="{% url 'home' %}" class="btn btn-outline-primary mt-3">Show All</a>
+      {% endif %}
+    </div>
+  </div>
+</form>
+  <!-- filtering section ends -->
+
+  <!-- table section -->
+  <div class="table-responsive">
+  <table class="table table-striped table-hover table-bordered align-middle mt-3">
+    <thead class="table-primary">
+      <tr>
+        <th scope="col">S.No</th>
+        <th scope="col">Task Title</th>
+        <th scope="col">Description</th>
+        <th scope="col">Status</th>
+        <th scope="col">Start Date</th>
+        <th scope="col">End Date</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in data %}
+        
+      
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{i.title}}</td>
+        <td class="truncate-text">{{i.description}}</td>
+        <td>{{i.status}}</td>
+        <td>{{i.start_date}}</td>
+        <td>{{i.end_date}}</td>
+        <td>
+        <!-- view Modal starts -->
+          <!-- Button trigger modal -->
+          <button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal-{{i.id}}">
+            <i class="fa-solid fa-eye"></i> View
+          </button>
+
+          <!-- Modal -->
+          <div class="modal fade" id="exampleModal-{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel-{{i.id}}" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="exampleModalLabel-{{i.id}}">{{i.title}}</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  Description: {{i.description}}
+                  <br><br>
+                  Status: {{i.status}}
+                  <br><br>
+                  Start Date: {{i.start_date}}
+                  <br><br>
+                  End Date: {{i.end_date}}
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        <!-- view Modal ends -->
+         </td>
+      </tr>
+      {% endfor %}
+     
+    </tbody>
+  </table>
+  </div>
+</div>
+<!-- Overview section ends -->
+
+{% endblock content %}

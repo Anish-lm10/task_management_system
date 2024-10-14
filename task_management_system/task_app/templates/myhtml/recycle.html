@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}
+  Trash
+{% endblock title %}
+{% load static %}
+{% block content %}
+  <h1 class="text-center mt-3">Deleted tasks</h1>
+
+  <div class="container mt-4">
+    <p class="mb-0 text-secondary-emphasis text-center">(*Note all the data here will be permanently deleted after 29 days.)</p>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered align-middle mt-3">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Task Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">Recycle</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if data %}
+          {% for i in data %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{i.title}}</td>
+            <td class="truncate-text">{{i.description}}</td>
+            <td>{{i.status}}</td>
+            <td>{{i.start_date}}</td>
+            <td>{{i.end_date}}</td>
+            <td>
+
+            <!-- recycle modal starts -->
+            <button class="btn btn-outline-success" data-bs-toggle="modal" data-bs-target="#modals-{{d.id}}"  data-bs-title="Mark as Complete" data-bs-placement="top">
+              <i class="fa-solid fa-recycle"></i> Recycle
+            </button>
+            </td>
+  
+            <!-- Modal -->
+            <div class="modal fade" id="modals-{{d.id}}" tabindex="-1" aria-labelledby="modalLabels-{{d.id}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLabels-{{d.id}}">Restore Data</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure u want to Restore this task?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <a href="{% url 'recycle' i.id %}"><button type="button" class="btn btn-outline-success">Restore</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- recycle modal ends -->
+           
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td colspan="8" class="text-center bg-secondary text-white">No tasks available.</td>
+          </tr>
+          {% endif %}
+         
+        </tbody>
+      </table>
+      </div>
+  </div>
+{% endblock content %}

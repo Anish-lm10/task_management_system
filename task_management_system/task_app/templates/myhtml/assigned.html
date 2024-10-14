@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}
+  View Task
+{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container d-flex align-items-center mt-3">
+  <h1>Assigned tasks</h1>
+  <div class="ms-auto">
+    <a href="{% url 'assign' %}"><div class=" btn btn-outline-primary circle" data-bs-toggle="tooltip" data-bs-title="Assign a task" data-bs-placement="top"><i class="fa-solid fa-plus"></i> </div></a>
+  </div>
+  </div>
+
+  <div class="container mt-4">
+    <h3 class="text-center display-6 mb-4">My Current Assigned Tasks</h3>
+    <div class="row justify-content-center gy-3 m-1">
+      {% for d in data %}
+      <div class="col-12  rounded-3 shadow-sm boxess p-2">
+        <p class="fw-bold text-primary fs-3">Task Title: {{d.title}}</p>
+        <p class="lead">Task Description: {{d.description}}</p>
+        <p class="fw-bold">Assigned by: {{d.assigned_by}}</p>
+        <p class="text-muted">Deadline Date: {{d.deadline}}</p>
+        
+
+        <div class="btns d-flex justify-content-end gap-3">
+          <!-- modal for complete btn starts  -->
+
+          <!-- Button trigger modal -->
+            <button type="button" class="btn btn-outline-success circle" data-bs-toggle="modal" data-bs-target="#modal-{{d.id}}"  data-bs-title="Mark as Complete" data-bs-placement="top">
+              <i class="fa-solid fa-check"></i>
+            </button>
+
+            <!-- Modal -->
+            <div class="modal fade" id="modal-{{d.id}}" tabindex="-1" aria-labelledby="modalLabel-{{d.id}}" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="modalLabel-{{d.id}}">Mark as Complete</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    Are you sure u want to mark the task as completed?
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Close</button>
+                    <a href="{% url 'acompleted' d.id %}"><button type="button" class="btn btn-outline-primary">Mark as completed</button></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <!-- modal for complete btn ends  -->
+           
+        </div>
+      </div>
+      
+    
+      {% endfor %}
+    </div>
+  </div>
+{% endblock content %}
+

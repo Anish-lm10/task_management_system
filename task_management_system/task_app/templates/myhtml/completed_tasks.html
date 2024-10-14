@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}
+  Completed-Tasks
+{% endblock title %}
+{% load static %}
+{% block content %}
+  <h1 class="text-center mt-3">My tasks(Completed)</h1>
+  <div class="container mt-4">
+    <p class="mb-0 text-secondary-emphasis text-center">(*Note all the data deleted here will not be shown in trash.)</p>
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered align-middle mt-3">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Task Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+            <th scope="col">Start Date</th>
+            <th scope="col">End Date</th>
+            <th scope="col">
+               <!-- modal for complete btn starts  -->
+
+              <!-- Button trigger modal -->
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalss">
+                  <i class="fa-solid fa-trash"></i> Delete all
+                </button>
+
+                <!-- Modal -->
+                <div class="modal fade" id="modalss" tabindex="-1" aria-labelledby="modalLabelss" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalLabelss">Clear All</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Are you sure u want to erase all data.?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                        <a href="{% url 'my_delete_all' %}"><button type="button" class="btn btn-outline-danger">Delete All</button></a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              <!-- modal for complete btn ends  -->
+             
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% if data %}
+          {% for i in data %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{i.title}}</td>
+            <td class="truncate-text">{{i.description}}</td>
+            <td>{{i.status}}</td>
+            <td>{{i.start_date}}</td>
+            <td>{{i.end_date}}</td>
+            <td>
+            <button class="btn btn-success">
+              <i class="fa-solid fa-check"></i> Completed
+            </button>
+            </td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td colspan="8" class="text-center bg-secondary text-white">No tasks available.</td>
+          </tr>
+          {% endif %}
+
+          
+        </tbody>
+      </table>
+      </div>
+  </div>
+
+
+
+  <h1 class="text-center mt-5 mb-0">Assigned Tasks(Completed)</h1>
+
+  <div class="container mt-3">
+    <div class="table-responsive">
+      <table class="table table-striped table-hover table-bordered align-middle mt-3">
+        <thead class="table-primary">
+          <tr>
+            <th scope="col">S.No</th>
+            <th scope="col">Assigned To</th>
+            <th scope="col">Task Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Deadline</th>
+            <th scope="col">
+                <!-- modal for complete btn starts  -->
+
+              <!-- Button trigger modal -->
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalss">
+                <i class="fa-solid fa-trash"></i> Delete all
+              </button>
+
+              <!-- Modal -->
+              <div class="modal fade" id="modalss" tabindex="-1" aria-labelledby="modalLabelss" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h1 class="modal-title fs-5" id="modalLabelss">Clear All</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      Are you sure u want to erase all data.?
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+                      <a href="{% url 'assign_delete_all' %}"><button type="button" class="btn btn-outline-danger">Delete All</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+            {% if datas %}
+          {% for i in datas %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <th scope="row">{{i.assign_to}}</th>
+            <td>{{i.title}}</td>
+            <td class="truncate-text">{{i.description}}</td>
+            <td>{{i.deadline}}</td>
+            <td>
+            <button class="btn btn-success">
+              <i class="fa-solid fa-check"></i> Completed
+            </button>
+            </td>
+          </tr>
+          {% endfor %}
+          {% else %}
+          <tr>
+            <td colspan="8" class="text-center bg-secondary text-white">No tasks available.</td>
+          </tr>
+          {% endif %}
+
+          <!-- for assign completed task -->
+        </tbody>
+      </table>
+      </div>
+  </div>
+{% endblock content %}

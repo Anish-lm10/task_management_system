@@ -1,0 +1,232 @@
+@import url('https://fonts.googleapis.com/css2?family=Bai+Jamjuree:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+:root {
+    --sidebar-width: 310px;
+    --font-base: "Bai Jamjuree";
+}
+
+body {
+    background: linear-gradient(to right, #f0f0f0, #ffffff);
+    font-family: var(--font-base), sans-serif;
+
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    color: #0d6efd;
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    width: 100%;
+}
+
+.navbar {
+    background: linear-gradient(135deg, #c8d5de, #75a1f2);
+    font-size: 18px;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    font-size: 23px;
+    border-radius: 50%;
+
+}
+
+.boxes {
+    width: 350px;
+    height: 200px;
+    background: linear-gradient(135deg, #6a11cb, #2575fc);
+}
+
+.truncate-text {
+    max-width: 100px;
+    /* Adjust width as needed */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.boxess {
+    width: 100%;
+    height: fit-content;
+    background: linear-gradient(to right, #f8f9fa 100%, #d0e7ff 0%);
+    border-left: 5px solid #007bff;
+
+}
+
+.boxess:hover {
+    background: linear-gradient(to right, #f8f9fa 0%, #d0e7ff 100%);
+}
+
+
+.text-muted {
+    font-size: 0.975rem;
+    color: #adb5bd;
+    /* Light grey for dates */
+}
+
+.icons {
+    position: relative;
+    right: 200px;
+}
+
+.texts{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* responsive design */
+@media (min-width:992px) {
+    .navbar {
+        min-height: 100vh;
+        width: var(--sidebar-width);
+        /* background: #d0eaff; */
+        /* background: linear-gradient(to bottom, #dfc1ff, #495bff); */
+        background: linear-gradient(135deg, #e0eafc, #cfdef3);
+        font-size: 18px;
+        position: fixed;
+        top: 0;
+    }
+
+    #content-wrapper {
+        padding-left: var(--sidebar-width);
+    }
+
+    .boxes {
+        width: 350px;
+        height: 200px;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+
+    }
+}
+
+
+/* form css */
+.form_main {
+    width: 500px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: rgb(255, 255, 255);
+    padding: 30px 30px 30px 30px;
+    border-radius: 30px;
+    box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.062);
+}
+
+.heading {
+    font-size: 2.5em;
+    color: #2e2e2e;
+    font-weight: 700;
+    margin: 15px 0 30px 0;
+}
+
+.inputContainer {
+    width: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.inputIcon {
+    position: absolute;
+    left: 10px;
+}
+
+.inputField {
+    width: 100%;
+    height: 40px;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid rgb(173, 173, 173);
+    border-radius: 30px;
+    margin: 10px 0;
+    color: black;
+    font-size: .8em;
+    font-weight: 500;
+    box-sizing: border-box;
+    padding-left: 30px;
+}
+
+.inputField:focus {
+    outline: none;
+    border-bottom: 2px solid rgb(199, 114, 255);
+}
+
+.inputField::placeholder {
+    color: rgb(80, 80, 80);
+    font-size: 1em;
+    font-weight: 500;
+}
+
+#button {
+    position: relative;
+    width: 100%;
+    border: 2px solid #8000ff;
+    background-color: #8000ff;
+    height: 40px;
+    color: white;
+    font-size: .8em;
+    font-weight: 500;
+    letter-spacing: 1px;
+    border-radius: 30px;
+    margin: 10px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+#button::after {
+    content: "";
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.253);
+    height: 100%;
+    width: 150px;
+    top: 0;
+    left: -200px;
+    border-bottom-right-radius: 100px;
+    border-top-left-radius: 100px;
+    filter: blur(10px);
+    transition-duration: .5s;
+}
+
+#button:hover::after {
+    transform: translateX(600px);
+    transition-duration: .5s;
+}
+
+.signupContainer {
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+}
+
+.signupContainer p {
+    font-size: .9em;
+    font-weight: 500;
+    color: black;
+}
+
+.signupContainer a {
+    font-size: .7em;
+    font-weight: 500;
+    background-color: #2e2e2e;
+    color: white;
+    text-decoration: none;
+    padding: 8px 15px;
+    border-radius: 20px;
+}
