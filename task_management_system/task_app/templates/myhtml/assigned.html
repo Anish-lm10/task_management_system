@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-  View Task
+  Assigned Task
 {% endblock title %}
 {% load static %}
 {% block content %}
@@ -18,6 +18,15 @@
       <div class="col-12  rounded-3 shadow-sm boxess p-2">
         <p class="fw-bold text-primary fs-3">Task Title: {{d.title}}</p>
         <p class="lead">Task Description: {{d.description}}</p>
+        <p class="btn {% if d.status == 'Completed' %}
+        btn-outline-success
+     {% elif d.status == 'On Hold' %}
+        btn-outline-warning
+       {% elif d.status == 'In Progress' %}
+        btn-outline-info
+     {% else %}
+       btn-outline-primary
+     {% endif %} fw-bolder">Status: {{d.status}}</p>
         <p class="fw-bold">Assigned by: {{d.assigned_by}}</p>
         <p class="text-muted">Deadline Date: {{d.deadline}}</p>
         
@@ -49,6 +58,14 @@
               </div>
             </div>
           <!-- modal for complete btn ends  -->
+
+
+        <!-- modal for edit btn starts -->
+        <a href="{% url 'aedit' d.id %}"><button class="btn btn-outline-primary circle" data-bs-toggle="tooltip" data-bs-title="Edit" data-bs-placement="top"><i class="fa-solid fa-pen-to-square"></i></button></a>
+
+
+
+        <!-- modal for edit btn ends -->
            
         </div>
       </div>

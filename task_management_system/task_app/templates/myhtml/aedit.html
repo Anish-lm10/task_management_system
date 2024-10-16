@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}
+  Create Task
+{% endblock title %}
+{% load static %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center mt-2">
+  <form method="POST" class="form_main" action="{% url 'aedit' data.id %}">
+      {% csrf_token %}
+      <a href="{% url 'assigned' %}"><div class="fs-4 icons"><i class="fa-solid fa-arrow-left"></i></div></a>
+      <p class="heading text-primary">Edit Assigned Task</p>
+
+
+      
+      <div class="inputContainer mb-5">
+       <!-- Select Dropdown -->
+        <select id="statusSelect" name="status" class="inputField" aria-label="Task Status">
+            <option value="Not Started" {% if data.status == "Not Started" %}selected{% endif %}>Not Started</option>
+            <option value="In Progress" {% if data.status == "In Progress" %}selected{% endif %}>In Progress</option>
+            <option value="Completed" {% if data.status == "Completed" %}selected{% endif %}>Completed</option>
+            <option value="On Hold" {% if data.status == "On Hold" %}selected{% endif %}>On Hold</option>
+        </select>
+      </div>
+
+
+           
+          
+  <button type="submit" id="button">Update</button>
+    
+  </form>
+
+</div>
+{% endblock content %}

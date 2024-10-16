@@ -30,13 +30,23 @@ class Create_task(models.Model):
     
 
 class Assign_task(models.Model):
+    STATUS_CHOICES = [
+        ('Not Started', 'Not Started'),
+        ('In Progress', 'In Progress'),
+        ('Completed', 'Completed'),
+        ('On Hold', 'On Hold'),
+    ]
+
     title=models.CharField(max_length=255)
     description=models.TextField()
+    status=models.CharField(max_length=50,choices=STATUS_CHOICES,default='Not Started')
     assigned_by=models.ForeignKey(User,on_delete=models.CASCADE, related_name='tasks_assigned_by',null=True)
     assign_to=models.ForeignKey(User,on_delete=models.CASCADE, related_name='tasks_assigned_to')
     deadline=models.DateField()
 
     is_completed=models.BooleanField(default=False)
+    is_deleted=models.BooleanField(default=False)
+
 
     def __str__(self) -> str:
         return self.title

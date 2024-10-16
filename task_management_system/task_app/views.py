@@ -117,11 +117,16 @@ def home(request):
 
         if request.method == 'POST':
             searched= request.POST.get('searched')
+            sort_by=request.POST.get('sort_by')
             if searched:
                 data=data.filter(Q(title__icontains=searched) | Q(status__icontains=searched))
                 if not data.exists():
                     messages.error(request,"No such task found!!")
                     return redirect('home')
+            if sort_by:
+                sort_by = sort_by.strip() 
+                data=data.order_by(sort_by)
+        
     else:
         data=[]
     return render(request,'myhtml/home.html',{'data':data,'count':current,'completed_no':completed,'username':current_user,'assigned_count':assigned_count}) 
@@ -150,6 +155,12 @@ def create(request):
 # view task logic starts
 def view(request):
     data=Create_task.objects.filter(is_completed=False,is_deleted=False,user=request.user)
+    if request.method == 'POST':
+        sort_by=request.POST.get('sort_by')
+        if sort_by:
+            sort_by = sort_by.strip() 
+            data=data.order_by(sort_by)
+        
     return render (request,'myhtml/view.html',{'data':data})
 # view task logic ends
 
@@ -159,6 +170,7 @@ def assign(request):
     if request.method == 'POST':
         title=request.POST.get('title')
         description=request.POST.get('description')
+        status=request.POST.get('status')
         username=request.POST.get('user')
         deadline=request.POST.get('edate')
         assigned_by=request.user
@@ -168,7 +180,7 @@ def assign(request):
             user_instance=User.objects.get(username=username)
             user_instance2=User.objects.get(username=assigned_by)
 
-            assigned=Assign_task.objects.create(title=title,description=description,assign_to=user_instance,deadline=deadline,assigned_by=user_instance2)
+            assigned=Assign_task.objects.create(title=title,description=description,status=status,assign_to=user_instance,deadline=deadline,assigned_by=user_instance2)
             assigned.save()
             messages.success(request,"Task has been successfully assigned!!")
             return redirect('assign')
@@ -189,16 +201,16 @@ def assigned(request):
 #completed tasks logic starts
 def completed_task(request):
     data=Create_task.objects.filter(is_completed=True,user=request.user)
-    datas=Assign_task.objects.filter(is_completed=True,assigned_by=request.user)
+    datas=Assign_task.objects.filter(is_deleted=False,assigned_by=request.user)
     return render(request,'myhtml/completed_tasks.html',{'data':data,'datas':datas})
 #completed tasks logic ends
 
 # trash/recycle logic starts
 def trash(request):
     removed=Create_task.objects.filter(is_deleted=True,user=request.user)
-    time=datetime.now()-timedelta(days=29)
-    time1=Create_task.objects.filter(clear_datetime__lt=time)
-    time1.delete()
+    # time=datetime.now()-timedelta(days=29)
+    # time1=Create_task.objects.filter(clear_datetime__lt=time)
+    # time1.delete()
     return render (request,'myhtml/recycle.html',{'data':removed})
 # trash/recycle logic ends
 
@@ -242,6 +254,16 @@ def acompleted(request,id):
     complete.save()
     messages.success(request,"Task has been marked completed!!")
     return redirect('assigned')
+
+def aedit(request,id):
+    assign=Assign_task.objects.get(id=id)
+    if request.method == 'POST':
+        assign.status=request.POST.get('status')
+        assign.save()
+        messages.success(request,"Status edited successfully")
+        return redirect('assigned')
+    return render(request,'myhtml/aedit.html',{'data':assign})
+
 # for assigned.html complete btn ends
 
 
@@ -253,7 +275,7 @@ def my_delete_all(request):
     return redirect('completed_task')
 
 def assign_delete_all(request):
-    datas=Assign_task.objects.filter(is_completed=True,assigned_by=request.user)
+    datas=Assign_task.objects.filter(is_deleted=False,assigned_by=request.user)
     datas.delete()
     messages.success(request,"All assigned completed tasks has been deleted!!")
     return redirect('completed_task')

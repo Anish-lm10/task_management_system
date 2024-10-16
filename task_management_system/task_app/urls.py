@@ -21,6 +21,7 @@ urlpatterns = [
 
     path('completed/<int:id>',completed,name='completed'),
     path('acompleted/<int:id>',acompleted,name='acompleted'),
+    path('aedit/<int:id>',aedit,name='aedit'),
     path('deleted/<int:id>',deleted,name='deleted'),
     path('edit/<int:id>',edit,name='edit'),
 

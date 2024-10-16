@@ -5,7 +5,7 @@
 {% load static %}
 {% block content %}
 <!-- Assign a task starts -->
-<div class="container mt-5">
+<div class="container mt-4">
   <div class="container d-flex justify-content-center align-items-center mt-2">
     <form method="POST" class="form_main" action="{% url 'assign' %}">
         {% csrf_token %}
@@ -21,6 +21,17 @@
             <label for="floatingTextarea"></label>
           </div>
         </div>
+
+        <div class="inputContainer mb-3">
+          <!-- Select Dropdown -->
+           <select id="statusSelect" name="status" class="inputField" aria-label="Task Status" required>
+             <option value="" selected>Select Status</option>
+             <option value="Not Started">Not Started</option>
+             <option value="In Progress">In Progress</option>
+             <option value="Completed">Completed</option>
+             <option value="On Hold">On Hold</option>
+           </select>
+         </div>
 
         <div class="inputContainer input-group mt-3">
           <div class="caption input-group">Assign To: </div>

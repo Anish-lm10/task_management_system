@@ -34,7 +34,7 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body">
-                        Are you sure u want to erase all data.?
+                        Are you sure u want to erase all data?
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
@@ -79,7 +79,7 @@
 
 
 
-  <h1 class="text-center mt-5 mb-0">Assigned Tasks(Completed)</h1>
+  <h1 class="text-center mt-5 mb-0">Assigned Tasks(Track)</h1>
 
   <div class="container mt-3">
     <div class="table-responsive">
@@ -95,16 +95,16 @@
                 <!-- modal for complete btn starts  -->
 
               <!-- Button trigger modal -->
-              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalss">
+              <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalsss">
                 <i class="fa-solid fa-trash"></i> Delete all
               </button>
 
               <!-- Modal -->
-              <div class="modal fade" id="modalss" tabindex="-1" aria-labelledby="modalLabelss" aria-hidden="true">
+              <div class="modal fade" id="modalsss" tabindex="-1" aria-labelledby="modalLabelsss" aria-hidden="true">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="modalLabelss">Clear All</h1>
+                      <h1 class="modal-title fs-5" id="modalLabelsss">Clear All</h1>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -130,8 +130,8 @@
             <td class="truncate-text">{{i.description}}</td>
             <td>{{i.deadline}}</td>
             <td>
-            <button class="btn btn-success">
-              <i class="fa-solid fa-check"></i> Completed
+            <button class="btn btn-primary">
+              {{i.status}}
             </button>
             </td>
           </tr>
